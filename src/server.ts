@@ -20,9 +20,9 @@ app.use(express.json()); // Parse incoming JSON request bodies
 // -----------------------------
 // Initialize Database
 // -----------------------------
-const db = new Database(process.env.DATABASE_URL || './data/tasks.sqlite3'); 
-// Uses DATABASE_URL from env or defaults to local SQLite file
 
+// Uses DATABASE_URL 
+const db = new Database(process.env.DATABASE_URL || ':memory:');
 // -----------------------------
 // Routes
 // -----------------------------
