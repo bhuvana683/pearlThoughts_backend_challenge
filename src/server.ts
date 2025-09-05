@@ -22,7 +22,7 @@ app.use(express.json()); // Parse incoming JSON request bodies
 // -----------------------------
 
 // Uses DATABASE_URL 
-const db = new Database(process.env.DATABASE_URL || ':memory:');
+const db = new Database(process.env.DATABASE_URL || './data/tasks.sqlite3');
 // -----------------------------
 // Routes
 // -----------------------------
