@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Viewer</title>
+</head>
+<body>
+  <h1>Tasks</h1>
+
+  <ul id="task-list">
+    <!-- Tasks will appear here -->
+  </ul>
+
+  <h2>Add Task</h2>
+  <input type="text" id="task-title" placeholder="Task name">
+  <button id="add-task">Add Task</button>
+
+  <script>
+    const taskList = document.getElementById('task-list');
+    const taskInput = document.getElementById('task-title');
+    const addBtn = document.getElementById('add-task');
+
+    // Function to fetch all tasks
+    async function loadTasks() {
+      const res = await fetch('http://localhost:3000/api/tasks');
+      const tasks = await res.json();
+      taskList.innerHTML = ''; // clear existing list
+      tasks.forEach(task => {
+        const li = document.createElement('li');
+        li.textContent = task.title;
+        taskList.appendChild(li);
+      });
+    }
+
+    // Add new task
+    addBtn.addEventListener('click', async () => {
+      const title = taskInput.value.trim();
+      if (!title) return alert('Enter a task name');
+
+      await fetch('http://localhost:3000/api/tasks', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title })
+      });
+
+      taskInput.value = ''; // clear input
+      loadTasks();          // reload tasks
+    });
+
+    // Initial load
+    loadTasks();
+  </script>
+</body>
+</html>
+
+
